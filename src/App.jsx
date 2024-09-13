@@ -10,8 +10,9 @@ const App = () => {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/bienvenido" element={<h1>Bienvenido</h1>} /> {/* Placeholder */}
+        <Route path="/bienvenido" element={<h1>Bienvenido</h1>} /> 
         <Route path="/profile" element={<Profile />} />
+       
       </Routes>
     </Router>
   );

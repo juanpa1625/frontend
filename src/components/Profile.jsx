@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EditProfile from './EditProfile';
+import { getUserProfile } from '../services/profileService';
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
-
   const [profileData, setProfileData] = useState({
-    photo: 'https://via.placeholder.com/150',
-    name: 'Xanthe Neal',
-    bio: 'I am a software developer and a big fan of devchallenges...',
-    phone: '908249274292',
-    email: 'xanthe.neal@gmail.com',
-    password: '*********',
+    photo: '',
+    name: '',
+    bio: '',
+    phone: '',
+    email: '',
+    password: '',
   });
 
   const toggleEdit = () => {
@@ -21,6 +21,19 @@ const Profile = () => {
     setProfileData(updatedData);
     setIsEditing(false);
   };
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const data = await getUserProfile();
+        setProfileData(data);
+      } catch (error) {
+        console.error('Error al obtener datos del perfil:', error);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   return (
     <div className="bg-gray-100 p-8">
@@ -35,7 +48,7 @@ const Profile = () => {
             <div className="flex items-center justify-between border-b pb-4 mb-4">
               <div className="flex items-center space-x-4">
                 <img
-                  src={profileData.photo}
+                  src={profileData.photo || 'https://via.placeholder.com/150'}
                   alt="Profile"
                   className="w-20 h-20 rounded-full object-cover"
                 />

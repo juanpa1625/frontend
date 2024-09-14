@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const EditProfile = ({ profileData, saveProfileData }) => {
   const [formData, setFormData] = useState(profileData);
@@ -8,9 +9,18 @@ const EditProfile = ({ profileData, saveProfileData }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    saveProfileData(formData);
+    try {
+      const response = await axios.put('/api/profile', formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      saveProfileData(response.data); // Guardar los datos actualizados
+    } catch (error) {
+      console.error('Error al guardar los datos del perfil:', error);
+    }
   };
 
   return (

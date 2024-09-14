@@ -9,12 +9,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await login(email, password);
-      localStorage.setItem('token', response.data.token);  // Guardar el token
-      alert('Login exitoso');
-      window.location.href = '/bienvenido';  // Redirigir a la página de bienvenida
+      await login({ correo: email, contraseña: password });
+      alert('Inicio de sesión exitoso');
+      window.location.href = '/profile';  // Redirigir a una página de inicio
     } catch (err) {
-      setError('Credenciales incorrectas');
+      setError(err.response?.data?.message || 'Error al iniciar sesión');
     }
   };
 

@@ -9,7 +9,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await register(email, password);
+      await register({ correo: email, contraseña: password });
       alert('Usuario registrado con éxito');
       window.location.href = '/login';  // Redirigir a login
     } catch (err) {
